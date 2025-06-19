@@ -2,7 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="fondo">#B8EAFF</color>
+    <color name="azul">#B8EAFF</color>
     <color name="boton">#5C7FFF</color>
     <color name="regresa">#59C867</color>
+    <color name="titulo">#00286F</color>
 </resources>
