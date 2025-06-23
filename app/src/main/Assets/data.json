@@ -1,0 +1,19 @@
+{
+  "alumnos": [
+    {
+      "numeroControl": "1",
+      "nombre": "Juan Pérez",
+      "carrera": "Ingeniería"
+    },
+    {
+      "numeroControl": "2",
+      "nombre": "Pérez Juan",
+      "carrera": "Contabilidad"
+    },
+    {
+      "numeroControl": "3",
+      "nombre": "Jose",
+      "carrera": "Administracion"
+    }
+  ]
+}

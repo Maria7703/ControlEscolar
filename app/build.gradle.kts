@@ -41,6 +41,8 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation("org.apache.poi:poi-ooxml:5.2.3")
+    implementation ("com.google.code.gson:gson:2.10.1")
+
 
 
 }

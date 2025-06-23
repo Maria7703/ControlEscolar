@@ -31,10 +31,8 @@ import org.json.JSONObject;
 import android.os.Environment;
 import android.widget.Toast;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-import androidx.activity.ComponentActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,6 +47,8 @@ public class AlumnosActivity extends AppCompatActivity {
     ImageButton regresar1;
 
     String idioma;
+
+    private RecyclerView alumnosRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +134,18 @@ public class AlumnosActivity extends AppCompatActivity {
             }
         });
 
+        alumnosRecyclerView = findViewById(R.id.alumnosRecyclerView);
+
+        // Leer datos del JSON
+        JSONHelper helper = new JSONHelper(this);
+        Data data = helper.readDataFromAssets();
+
+        if (data != null && data.getAlumnos() != null) {
+            AlumnosAdapter adapter = new AlumnosAdapter(data.getAlumnos());
+            alumnosRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            alumnosRecyclerView.setAdapter(adapter);
+        }
+
 
 
 
@@ -159,12 +171,10 @@ public class AlumnosActivity extends AppCompatActivity {
             ((TextView) findViewById(R.id.nomText)).setText(obj.getString("nombre"));
             ((TextView) findViewById(R.id.numText)).setText(obj.getString("numero"));
             ((TextView) findViewById(R.id.carreraText)).setText(obj.getString("carrera"));
-            ((TextView) findViewById(R.id.semestreText)).setText(obj.getString("semestre"));
 
             ((EditText) findViewById(R.id.nomEdit)).setHint(obj.getString("nombre"));
             ((EditText) findViewById(R.id.numEdit)).setHint(obj.getString("numero"));
             ((EditText) findViewById(R.id.areaEdit)).setHint(obj.getString("carrera"));
-            ((EditText) findViewById(R.id.semestreEdit)).setHint(obj.getString("semestre"));
 
             ((Button) findViewById(R.id.btnAgregar)).setText(obj.getString("agregar"));
             ((Button) findViewById(R.id.btnEliminar)).setText(obj.getString("eliminar"));

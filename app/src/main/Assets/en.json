@@ -5,7 +5,6 @@
   "nombre": "Student Name",
   "numero": "Student ID",
   "carrera": "Program",
-  "semestre": "Semester",
   "agregar": "Add",
   "eliminar": "Delete",
   "consultar": "Query",
