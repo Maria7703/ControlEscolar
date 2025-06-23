@@ -1,0 +1,13 @@
+{
+  "titulo": "School Control",
+  "alumnos": "📝 Students",
+  "docentes": "📜 Teachers",
+  "nombre": "Student Name",
+  "numero": "Student ID",
+  "carrera": "Program",
+  "semestre": "Semester",
+  "agregar": "Add",
+  "eliminar": "Delete",
+  "consultar": "Query",
+  "modificar": "Edit"
+}

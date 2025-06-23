@@ -1,0 +1,13 @@
+{
+  "titulo": "Control escolar",
+  "alumnos": "📝 Alumnos",
+  "docentes": "📜 Docentes",
+  "nombre": "Nombre del alumno",
+  "numero": "Número de control",
+  "carrera": "Carrera",
+  "semestre": "Semestre",
+  "agregar": "Agregar",
+  "eliminar": "Eliminar",
+  "consultar": "Consultar",
+  "modificar": "Modificar"
+}
