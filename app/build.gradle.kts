@@ -4,11 +4,11 @@ plugins {
 
 android {
     namespace = "com.example.controlescolar"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.controlescolar"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -41,5 +41,6 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation("org.apache.poi:poi-ooxml:5.2.3")
+
 
 }

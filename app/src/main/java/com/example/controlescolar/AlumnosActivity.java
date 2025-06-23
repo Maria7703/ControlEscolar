@@ -13,6 +13,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,6 +30,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import android.os.Environment;
 import android.widget.Toast;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Button;
+import androidx.activity.ComponentActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -60,6 +72,14 @@ public class AlumnosActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 exportarJSON();
+            }
+        });
+
+        Button botonExportarEXCEL = findViewById(R.id.botonexportarExcel);
+        botonExportarJSON.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                exportarAlumnosAExcel();
             }
         });
 
@@ -113,6 +133,7 @@ public class AlumnosActivity extends AppCompatActivity {
                 }
             }
         });
+
 
 
 
@@ -200,6 +221,78 @@ public class AlumnosActivity extends AppCompatActivity {
             throw new RuntimeException(e);
         }
     }
+
+    //Funcion exportar alumnos a Excel (equipo Ramon)
+    private void exportarAlumnosAExcel() {
+        // Inicializar base de datos
+        BaseDatosHelper baseDatosHelper = new BaseDatosHelper(this);
+        SQLiteDatabase db = baseDatosHelper.getReadableDatabase();
+
+        // Obtener los datos de los alumnos desde la base de datos
+        Cursor cursor = db.rawQuery("SELECT * FROM " + BaseDatosHelper.TABLA_ALUMNOS, null);
+        JSONArray alumnosArray = new JSONArray();
+
+        if (cursor.moveToFirst()) {
+            do {
+                JSONObject alumno = new JSONObject();
+                try {
+                    alumno.put("numero_control", cursor.getString(cursor.getColumnIndexOrThrow(BaseDatosHelper.CAMPO_NUMERO_CONTROL)));
+                    alumno.put("nombre", cursor.getString(cursor.getColumnIndexOrThrow(BaseDatosHelper.CAMPO_NOMBRE)));
+                    alumno.put("carrera", cursor.getString(cursor.getColumnIndexOrThrow(BaseDatosHelper.CAMPO_CARRERA)));
+                    alumnosArray.put(alumno);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, "Error al procesar un alumno: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        // Crear un archivo Excel
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Alumnos");
+        Row headerRow = sheet.createRow(0);
+
+        // Encabezados
+        String[] columnas = {"No Control", "Nombre", "Carrera"};
+        for (int i = 0; i < columnas.length; i++) {
+            headerRow.createCell(i).setCellValue(columnas[i]);
+        }
+
+        // Llenar los datos
+        for (int i = 0; i < alumnosArray.length(); i++) {
+            try {
+                JSONObject alumno = alumnosArray.getJSONObject(i);
+                Row row = sheet.createRow(i + 1);
+
+                row.createCell(0).setCellValue(alumno.optString("numero_control", "No disponible"));
+                row.createCell(1).setCellValue(alumno.optString("nombre", "No disponible"));
+                row.createCell(2).setCellValue(alumno.optString("carrera", "No disponible"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Error al acceder a los datos de un alumno: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        // Guardar el archivo Excel en la carpeta de Descargas
+        try {
+            String nombreArchivo = "alumnos.xlsx";
+            File directorio = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            File archivo = new File(directorio, nombreArchivo);
+
+            FileOutputStream fos = new FileOutputStream(archivo);
+            workbook.write(fos);
+            fos.close();
+
+            Toast.makeText(this, "Excel guardado en: " + archivo.getAbsolutePath(), Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Error al exportar", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
 
 
