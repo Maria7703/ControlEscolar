@@ -19,6 +19,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
+import android.os.Bundle;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+
+import android.content.Intent;
+import android.view.View;
+import android.widget.Button;
+
+
 public class MainActivity extends AppCompatActivity {
 
     Button btnAlumnos, btnDocentes, btnIdioma;
@@ -41,6 +55,12 @@ public class MainActivity extends AppCompatActivity {
 
         btnAlumnos.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, AlumnosActivity.class);
+            intent.putExtra("idioma", idiomaActual);
+            startActivity(intent);
+        });
+
+        btnDocentes.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, DoccentesActivity.class);
             intent.putExtra("idioma", idiomaActual);
             startActivity(intent);
         });

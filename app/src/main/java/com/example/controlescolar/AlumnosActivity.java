@@ -37,6 +37,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+
+
+
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.File;
@@ -76,7 +79,7 @@ public class AlumnosActivity extends AppCompatActivity {
         });
 
         Button botonExportarEXCEL = findViewById(R.id.botonexportarExcel);
-        botonExportarJSON.setOnClickListener(new View.OnClickListener() {
+        botonExportarEXCEL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 exportarAlumnosAExcel();
@@ -145,7 +148,6 @@ public class AlumnosActivity extends AppCompatActivity {
             alumnosRecyclerView.setLayoutManager(new LinearLayoutManager(this));
             alumnosRecyclerView.setAdapter(adapter);
         }
-
 
 
 
